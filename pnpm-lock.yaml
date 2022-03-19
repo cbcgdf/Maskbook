@@ -45,8 +45,11 @@ importers:
       eslint-plugin-react-hooks: ^4.4.0
       eslint-plugin-unicorn: ^42.0.0
       eslint-plugin-unused-imports: ^2.0.0
+      glob: ^7.2.0
+      glob-promise: ^4.2.2
       gulp: ^4.0.2
       husky: ^7.0.4
+      i18next: ^21.6.14
       immer: 9.0.12
       jest: ^28.0.0-alpha.8
       lint-staged: ^12.4.0
@@ -80,13 +83,16 @@ importers:
       '@types/react': 18.0.2
       '@types/react-dom': 18.0.2
       '@types/web': 0.0.61
+      glob: 7.2.0
+      glob-promise: 4.2.2_glob@7.2.0
+      i18next: 21.6.16
       immer: 9.0.12
       lodash: 4.17.21
       lodash-es: 4.17.21
       lodash-unified: 1.0.2_da03a4540fbd16bbaafbb96724306afd
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
-      react-i18next: 11.16.7_react-dom@18.0.0+react@18.0.0
+      react-i18next: 11.16.7_d766a2cc1911ed4bc559e0fa3ed28191
       ses: 0.15.15
       ts-results: 3.3.0
       web3-core: 1.7.3
@@ -642,7 +648,7 @@ importers:
       unstated-next: 1.1.0
       use-subscription: 1.6.0_react@18.0.0
     devDependencies:
-      react-i18next: 11.16.7_react-dom@18.0.0+react@18.0.0
+      react-i18next: 11.16.7_d766a2cc1911ed4bc559e0fa3ed28191
 
   packages/plugins/CrossChainBridge:
     specifiers:
@@ -16357,6 +16363,16 @@ packages:
       glob: 7.2.0
     dev: true
 
+  /glob-promise/4.2.2_glob@7.2.0:
+    resolution: {integrity: sha512-xcUzJ8NWN5bktoTIX7eOclO1Npxd/dyVqUJxlLIDasT4C7KZyqlPIwkdJ0Ypiy3p2ZKahTjK4M9uC3sNSfNMzw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      glob: ^7.1.6
+    dependencies:
+      '@types/glob': 7.2.0
+      glob: 7.2.0
+    dev: false
+
   /glob-stream/6.1.0:
     resolution: {integrity: sha1-cEXJlBOz65SIjYOrRtC0BMx73eQ=}
     engines: {node: '>= 0.10'}
@@ -22281,7 +22297,7 @@ packages:
       react: 18.0.0
     dev: false
 
-  /react-i18next/11.16.7_react-dom@18.0.0+react@18.0.0:
+  /react-i18next/11.16.7_d766a2cc1911ed4bc559e0fa3ed28191:
     resolution: {integrity: sha512-7yotILJLnKfvUfrl/nt9eK9vFpVFjZPLWAwBzWL6XppSZZEvlmlKk0GBGDCAPfLfs8oND7WAbry8wGzdoiW5Nw==}
     peerDependencies:
       i18next: '>= 19.0.0'
@@ -22297,6 +22313,7 @@ packages:
       '@babel/runtime': 7.17.9
       html-escaper: 2.0.2
       html-parse-stringify: 3.0.1
+      i18next: 21.6.16
       react: 18.0.0
       react-dom: 18.0.0_react@18.0.0
 
