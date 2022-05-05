@@ -3,7 +3,7 @@ import { MaskMessages } from '../../../../shared/messages'
 import { InternalStorageKeys } from '../../../services/settings/utils'
 import type { PopupSSR_Props } from './type'
 import { getCurrentPersonaIdentifier_alternative, getLanguagePreference } from '../../../services/settings'
-import { queryPersona } from '../../../services/identity'
+import { queryOwnedPersonaInformation } from '../../../services/identity'
 
 export let cache: { html: string; css: string } = { html: '', css: '' }
 export function startListen(
@@ -13,10 +13,15 @@ export function startListen(
     const task = throttle(
         async function task() {
             cache = await prepareData().then(render)
+            console.log(cache.html)
         },
         2000,
         { leading: true },
     )
+    import.meta.webpackHot?.accept('../../../../src/extension/popups/SSR-server.tsx', () => {
+        if (signal.aborted) return
+        task()
+    })
 
     task()?.then(() => console.log('[Popup SSR] Page ready.'))
     MaskMessages.events.ownPersonaChanged.on(task, { signal })
@@ -31,15 +36,16 @@ export function startListen(
 
 async function prepareData(): Promise<PopupSSR_Props> {
     const language = getLanguagePreference()
-    const persona = await getCurrentPersonaIdentifier_alternative()
-    const personaInfo = persona ? await queryPersona(persona) : undefined
+    const id = await getCurrentPersonaIdentifier_alternative()
+    const personas = await queryOwnedPersonaInformation(false)
+    const currentPersona = personas.find((x) => x.identifier === id) || personas.at(0)
 
     return {
         language: await language,
-        currentFingerPrint: persona?.rawPublicKey,
-        hasPersona: !!personaInfo,
-        linkedProfilesCount: personaInfo?.linkedProfiles.length ?? 0,
-        nickname: personaInfo?.nickname,
-        avatar: null,
+        avatar: currentPersona?.avatar,
+        currentFingerPrint: id?.rawPublicKey,
+        hasPersona: !!currentPersona,
+        linkedProfilesCount: currentPersona?.linkedProfiles.length ?? 0,
+        nickname: currentPersona?.nickname,
     }
 }

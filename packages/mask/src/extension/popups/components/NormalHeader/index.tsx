@@ -1,3 +1,5 @@
+// ! This file is used during SSR. DO NOT import new files that does not work in SSR
+
 import { memo, useContext } from 'react'
 import { makeStyles } from '@masknet/theme'
 import { Box, Typography } from '@mui/material'
@@ -39,12 +41,18 @@ interface NormalHeaderProps {
     onlyTitle?: boolean
 }
 
+function canNavBack() {
+    try {
+        return history.length !== 1
+    } catch {}
+    return false
+}
 export const NormalHeader = memo<NormalHeaderProps>(({ onlyTitle }) => {
     const { classes } = useStyles()
     const navigate = useNavigate()
     const { title } = useContext(PageTitleContext)
 
-    const showTitle = history.length !== 1 && title
+    const showTitle = canNavBack() && title
 
     if (onlyTitle)
         return (

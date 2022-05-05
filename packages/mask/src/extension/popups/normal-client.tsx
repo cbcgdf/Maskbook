@@ -9,10 +9,18 @@ import createCache from '@emotion/cache'
 import { CacheProvider } from '@emotion/react'
 import { TssCacheProvider } from '@masknet/theme'
 import { createSubscriptionFromAsync } from '@masknet/shared-base'
+import { currentPersonaIdentifier } from '../../settings/settings'
+import { setInitialPersonaInformation } from './pages/Personas/hooks/PersonaContextInitialData'
 
 if (location.hash === '#/personas') {
     async function hydrate() {
-        await Promise.all([status])
+        console.time('[SSR] Prefill data')
+        await Promise.all([
+            status,
+            currentPersonaIdentifier.readyPromise,
+            Services.Identity.queryOwnedPersonaInformation(false).then(setInitialPersonaInformation),
+        ])
+        console.timeEnd('[SSR] Prefill data')
 
         const muiCache = createCache({ key: 'css' })
         const tssCache = createCache({ key: 'tss' })
@@ -23,7 +31,7 @@ if (location.hash === '#/personas') {
                 </TssCacheProvider>
             </CacheProvider>,
         )
-        startPluginHost()
+        setTimeout(startPluginHost, 200)
         console.timeEnd('[SSR] Hydrate')
     }
     hydrate()

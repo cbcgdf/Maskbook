@@ -30,9 +30,7 @@ if (location.hash === '#/personas') {
 
         console.time('[SSR] Hydrate')
     })
-    setTimeout(() => {
-        import(/* webpackPreload: true */ './normal-client')
-    }, 15)
+    import(/* webpackPreload: true */ './normal-client')
 } else {
     import(/* webpackPreload: true */ './normal-client')
 }

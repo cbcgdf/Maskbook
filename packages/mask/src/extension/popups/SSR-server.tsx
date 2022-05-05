@@ -16,6 +16,7 @@ import { PopupFrame } from './components/PopupFrame'
 import { PersonaHomeUI } from './pages/Personas/Home/UI'
 import { usePopupFullPageTheme } from '../../utils/theme/useClassicMaskFullPageTheme'
 import { PersonaHeaderUI } from './pages/Personas/components/PersonaHeader/UI'
+import { NormalHeader } from './components/NormalHeader'
 
 const init = once(() =>
     i18NextInstance.init().then(() => {
@@ -50,32 +51,40 @@ function PopupSSR(props: PopupSSR_Props) {
         return usePopupFullPageTheme(props.language)
     }
     return (
-        <StaticRouter location={PopupRoutes.Personas}>
-            <MaskThemeProvider useTheme={useTheme} CustomSnackbarOffsetY={0} useMaskIconPalette={() => 'light'}>
-                <Suspense fallback={null}>
+        // MaskUIRoot
+        <Suspense fallback={null}>
+            <StaticRouter location={PopupRoutes.Personas}>
+                <MaskThemeProvider useTheme={useTheme} CustomSnackbarOffsetY={0} useMaskIconPalette={() => 'light'}>
                     <PopupFrame>
-                        <PersonaHeaderUI
-                            isSelectPersonaPage
-                            onActionClick={noop}
-                            avatar={props.avatar}
-                            fingerprint={props.currentFingerPrint || ''}
-                            nickname={props.nickname}
-                        />
-                        <PersonaHomeUI
-                            fetchProofsLoading
-                            onEdit={noop}
-                            onRestore={noop}
-                            onCreatePersona={noop}
-                            avatar={props.avatar}
-                            fingerprint={props.currentFingerPrint || ''}
-                            isEmpty={!props.hasPersona}
-                            nickname={props.nickname}
-                            accountsCount={props.linkedProfilesCount}
-                            walletsCount={0}
-                        />
+                        {/* Persona */}
+                        <Suspense fallback={null}>
+                            {props.hasPersona ? (
+                                <PersonaHeaderUI
+                                    isSelectPersonaPage={false}
+                                    onActionClick={noop}
+                                    avatar={props.avatar}
+                                    fingerprint={props.currentFingerPrint || ''}
+                                    nickname={props.nickname}
+                                />
+                            ) : (
+                                <NormalHeader />
+                            )}
+                            <PersonaHomeUI
+                                fetchProofsLoading
+                                onEdit={noop}
+                                onRestore={noop}
+                                onCreatePersona={noop}
+                                avatar={props.avatar}
+                                fingerprint={props.currentFingerPrint || ''}
+                                isEmpty={!props.hasPersona}
+                                nickname={props.nickname}
+                                accountsCount={props.linkedProfilesCount}
+                                walletsCount={0}
+                            />
+                        </Suspense>
                     </PopupFrame>
-                </Suspense>
-            </MaskThemeProvider>
-        </StaticRouter>
+                </MaskThemeProvider>
+            </StaticRouter>
+        </Suspense>
     )
 }

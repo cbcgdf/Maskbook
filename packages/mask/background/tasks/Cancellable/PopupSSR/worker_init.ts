@@ -6,4 +6,5 @@ globalThis.addEventListener('message', async (event) => {
     const result = await main(data)
     globalThis.postMessage(result)
 })
+
 globalThis.postMessage('alive')
