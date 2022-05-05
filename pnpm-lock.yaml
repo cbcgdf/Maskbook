@@ -16,11 +16,12 @@ importers:
       '@dimensiondev/eslint-plugin': ^0.0.2-20220414093950-7d54c58
       '@dimensiondev/kit': 0.0.0-20220228054820-f2378be
       '@dimensiondev/patch-package': ^6.5.0
-      '@emotion/cache': ^11.7.1
-      '@emotion/react': ^11.9.0
-      '@emotion/serialize': ^1.0.3
-      '@emotion/styled': ^11.8.1
-      '@emotion/utils': ^1.1.0
+      '@emotion/cache': 11.7.1
+      '@emotion/react': 11.9.0
+      '@emotion/serialize': 1.0.3
+      '@emotion/server': 11.4.0
+      '@emotion/styled': 11.8.1
+      '@emotion/utils': 1.1.0
       '@jest/globals': ^28.0.0-alpha.8
       '@magic-works/i18n-codegen': ^0.1.0
       '@masknet/cli': workspace:*
@@ -69,6 +70,7 @@ importers:
       '@emotion/cache': 11.7.1
       '@emotion/react': 11.9.0_wu2ym3hmg7l4ose2cw56vw46fu
       '@emotion/serialize': 1.0.3
+      '@emotion/server': 11.4.0
       '@emotion/styled': 11.8.1_2bguzx5w7zvk23ok26pcdijj6y
       '@emotion/utils': 1.1.0
       '@mui/icons-material': 5.6.2_gl4lg5dzoftfdkay7wufbksvkm
@@ -4257,7 +4259,7 @@ packages:
       '@emotion/css':
         optional: true
     dependencies:
-      '@emotion/utils': 1.0.0
+      '@emotion/utils': 1.1.0
       html-tokenize: 2.0.1
       multipipe: 1.0.2
       through: 2.3.8
@@ -4308,7 +4310,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@babel/runtime': 7.17.2
+      '@babel/runtime': 7.17.9
       '@emotion/babel-plugin': 11.7.2
       '@emotion/is-prop-valid': 1.1.2
       '@emotion/react': 11.9.0_wu2ym3hmg7l4ose2cw56vw46fu
@@ -4328,10 +4330,6 @@ packages:
   /@emotion/utils/0.11.3:
     resolution: {integrity: sha512-0o4l6pZC+hI88+bzuaX/6BgOvQVhbt2PfmxauVaYOGgbsAw14wdKyvMCZXnsnsHys94iadcF+RG/wZyx6+ZZBw==}
     dev: true
-
-  /@emotion/utils/1.0.0:
-    resolution: {integrity: sha512-mQC2b3XLDs6QCW+pDQDiyO/EdGZYOygE8s5N5rrzjSI4M3IejPE/JPndCBwRT9z982aqQNi6beWs1UeayrQxxA==}
-    dev: false
 
   /@emotion/utils/1.1.0:
     resolution: {integrity: sha512-iRLa/Y4Rs5H/f2nimczYmS5kFJEbpiVvgN3XVfZ022IYhuNA1IRSHEizcof88LtCTXtl9S2Cxt32KgaXEu72JQ==}
@@ -17001,7 +16999,7 @@ packages:
     dependencies:
       buffer-from: 0.1.2
       inherits: 2.0.4
-      minimist: 1.2.5
+      minimist: 1.2.6
       readable-stream: 1.0.34
       through2: 0.4.2
     dev: false
