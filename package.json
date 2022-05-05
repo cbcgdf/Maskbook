@@ -27,6 +27,7 @@
     "spellcheck": "cspell lint --no-must-find-files"
   },
   "dependencies": {
+    "@babel/runtime": "7.17.9",
     "@dimensiondev/kit": "0.0.0-20220228054820-f2378be",
     "@emotion/cache": "11.7.1",
     "@emotion/react": "11.9.0",

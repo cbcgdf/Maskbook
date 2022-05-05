@@ -11,6 +11,7 @@ importers:
 
   .:
     specifiers:
+      '@babel/runtime': 7.17.9
       '@commitlint/cli': ^16.2.3
       '@commitlint/config-conventional': ^16.2.1
       '@dimensiondev/eslint-plugin': ^0.0.2-20220414093950-7d54c58
@@ -66,6 +67,7 @@ importers:
       web3-core: 1.7.3
       web3-core-method: 1.7.3
     dependencies:
+      '@babel/runtime': 7.17.9
       '@dimensiondev/kit': 0.0.0-20220228054820-f2378be
       '@emotion/cache': 11.7.1
       '@emotion/react': 11.9.0_wu2ym3hmg7l4ose2cw56vw46fu
