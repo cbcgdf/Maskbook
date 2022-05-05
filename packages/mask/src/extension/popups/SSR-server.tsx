@@ -1,14 +1,7 @@
 // ! This file is used during SSR. DO NOT import new files that does not work in SSR
 
 import { Suspense } from 'react'
-import {
-    FacebookColoredIcon,
-    InstagramColoredIcon,
-    MindsIcon,
-    TwitterColoredIcon,
-    OpenSeaColoredIcon,
-} from '@masknet/icons'
-import { i18NextInstance, updateLanguage, EnhanceableSite, PopupRoutes } from '@masknet/shared-base'
+import { i18NextInstance, updateLanguage, PopupRoutes } from '@masknet/shared-base'
 import { once, noop } from 'lodash-unified'
 import { TssCacheProvider, MaskThemeProvider } from '@masknet/theme'
 import { CacheProvider } from '@emotion/react'
@@ -22,6 +15,7 @@ import { StaticRouter } from 'react-router-dom/server'
 import { PopupFrame } from './components/PopupFrame'
 import { PersonaHomeUI } from './pages/Personas/Home/UI'
 import { usePopupFullPageTheme } from '../../utils/theme/useClassicMaskFullPageTheme'
+import { PersonaHeaderUI } from './pages/Personas/components/PersonaHeader/UI'
 
 const init = once(() =>
     i18NextInstance.init().then(() => {
@@ -51,20 +45,6 @@ export async function render(props: PopupSSR_Props) {
     return { html, css: muiCSS + tssCSS }
 }
 
-const SOCIAL_MEDIA_ICON_MAPPING: Record<string, React.ReactNode> = {
-    [EnhanceableSite.Facebook]: <FacebookColoredIcon />,
-    [EnhanceableSite.Twitter]: <TwitterColoredIcon />,
-    [EnhanceableSite.Instagram]: <InstagramColoredIcon />,
-    [EnhanceableSite.Minds]: <MindsIcon />,
-    [EnhanceableSite.OpenSea]: <OpenSeaColoredIcon />,
-}
-const DEFINED_SITES = [
-    EnhanceableSite.Facebook,
-    EnhanceableSite.Twitter,
-    EnhanceableSite.Instagram,
-    EnhanceableSite.Minds,
-    EnhanceableSite.OpenSea,
-]
 function PopupSSR(props: PopupSSR_Props) {
     function useTheme() {
         return usePopupFullPageTheme(props.language)
@@ -74,16 +54,25 @@ function PopupSSR(props: PopupSSR_Props) {
             <MaskThemeProvider useTheme={useTheme} CustomSnackbarOffsetY={0} useMaskIconPalette={() => 'light'}>
                 <Suspense fallback={null}>
                     <PopupFrame>
-                        <Suspense fallback={null}>
-                            <PersonaHomeUI
-                                accountsCount={2}
-                                fetchProofsLoading
-                                onEdit={noop}
-                                onRestore={noop}
-                                walletsCount={0}
-                                onCreatePersona={noop}
-                            />
-                        </Suspense>
+                        <PersonaHeaderUI
+                            isSelectPersonaPage
+                            onActionClick={noop}
+                            avatar={props.avatar}
+                            fingerprint={props.currentFingerPrint || ''}
+                            nickname={props.nickname}
+                        />
+                        <PersonaHomeUI
+                            fetchProofsLoading
+                            onEdit={noop}
+                            onRestore={noop}
+                            onCreatePersona={noop}
+                            avatar={props.avatar}
+                            fingerprint={props.currentFingerPrint || ''}
+                            isEmpty={!props.hasPersona}
+                            nickname={props.nickname}
+                            accountsCount={props.linkedProfilesCount}
+                            walletsCount={0}
+                        />
                     </PopupFrame>
                 </Suspense>
             </MaskThemeProvider>

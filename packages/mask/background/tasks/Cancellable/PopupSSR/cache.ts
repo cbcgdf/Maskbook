@@ -2,7 +2,8 @@ import { throttle } from 'lodash-unified'
 import { MaskMessages } from '../../../../shared/messages'
 import { InternalStorageKeys } from '../../../services/settings/utils'
 import type { PopupSSR_Props } from './type'
-import { getLanguagePreference } from '../../../services/settings'
+import { getCurrentPersonaIdentifier_alternative, getLanguagePreference } from '../../../services/settings'
+import { queryPersona } from '../../../services/identity'
 
 export let cache: { html: string; css: string } = { html: '', css: '' }
 export function startListen(
@@ -30,8 +31,15 @@ export function startListen(
 
 async function prepareData(): Promise<PopupSSR_Props> {
     const language = getLanguagePreference()
+    const persona = await getCurrentPersonaIdentifier_alternative()
+    const personaInfo = persona ? await queryPersona(persona) : undefined
 
     return {
         language: await language,
+        currentFingerPrint: persona?.rawPublicKey,
+        hasPersona: !!personaInfo,
+        linkedProfilesCount: personaInfo?.linkedProfiles.length ?? 0,
+        nickname: personaInfo?.nickname,
+        avatar: null,
     }
 }

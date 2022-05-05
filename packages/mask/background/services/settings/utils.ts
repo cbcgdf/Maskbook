@@ -29,3 +29,11 @@ export async function getBrowserStorageUnchecked<T extends InternalStorageKeys>(
     }
     return result
 }
+
+/**
+ * @internal
+ * @deprecated
+ */
+export async function setBrowserStorageUnchecked(key: InternalStorageKeys, value: string) {
+    await browser.storage.local.set({ [key]: value })
+}
