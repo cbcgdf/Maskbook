@@ -1,7 +1,8 @@
 import { Box, Typography, List, ListItem, CircularProgress } from '@mui/material'
 import { makeStyles } from '@masknet/theme'
 import { useState, useCallback, useEffect, useMemo } from 'react'
-import { useI18N } from '../../../utils'
+import { useI18N } from '../locales'
+import { useI18N as useBaseI18n } from '../../../utils'
 import classNames from 'classnames'
 import ActionButton from '../../../extension/options-page/DashboardComponents/ActionButton'
 import { ERC721ContractSelectPanel } from '../../../web3/UI/ERC721ContractSelectPanel'
@@ -201,7 +202,8 @@ interface RedPacketERC721FormProps {
     onClose: () => void
 }
 export function RedPacketERC721Form(props: RedPacketERC721FormProps) {
-    const { t } = useI18N()
+    const t = useI18N()
+    const { t: i18n } = useBaseI18n()
     const { onClose } = props
     const { classes } = useStyles()
     const [open, setOpen] = useState(false)
@@ -259,10 +261,10 @@ export function RedPacketERC721Form(props: RedPacketERC721FormProps) {
     const { RED_PACKET_NFT_ADDRESS } = useNftRedPacketConstants()
 
     const validationMessage = useMemo(() => {
-        if (!balance) return t('plugin_red_packet_erc721_insufficient_balance')
-        if (tokenDetailedList.length === 0) return t('plugin_wallet_select_a_token')
+        if (!balance) return t.erc721_insufficient_balance()
+        if (tokenDetailedList.length === 0) return i18n('plugin_wallet_select_a_token')
         return ''
-    }, [tokenDetailedList.length, balance])
+    }, [tokenDetailedList.length, balance, t, i18n])
 
     return (
         <>
@@ -297,8 +299,11 @@ export function RedPacketERC721Form(props: RedPacketERC721FormProps) {
                                 <Typography color="textPrimary">
                                     {tokenDetailedOwnerList.length === 0
                                         ? 'All'
-                                        : t('plugin_red_packet_nft_select_all_option', {
-                                              total: Math.min(NFT_RED_PACKET_MAX_SHARES, tokenDetailedOwnerList.length),
+                                        : t.nft_select_all_option({
+                                              total: Math.min(
+                                                  NFT_RED_PACKET_MAX_SHARES,
+                                                  tokenDetailedOwnerList.length,
+                                              ).toString(),
                                           })}
                                 </Typography>
                             </div>
@@ -310,9 +315,7 @@ export function RedPacketERC721Form(props: RedPacketERC721FormProps) {
                                     )}>
                                     <CheckIcon className={classes.checkIcon} />
                                 </div>
-                                <Typography color="textPrimary">
-                                    {t('plugin_red_packet_nft_select_partially_option')}
-                                </Typography>
+                                <Typography color="textPrimary">{t.nft_select_partially_option()}</Typography>
                             </div>
                         </Box>
                     )
@@ -338,12 +341,8 @@ export function RedPacketERC721Form(props: RedPacketERC721FormProps) {
                 </div>
                 {contract && balance && !loadingOwnerList ? (
                     <>
-                        <Typography className={classes.unapprovedTip}>
-                            {t('plugin_red_packet_nft_unapproved_tip')}
-                        </Typography>
-                        <Typography className={classes.approveAllTip}>
-                            {t('plugin_red_packet_nft_approve_all_tip')}
-                        </Typography>
+                        <Typography className={classes.unapprovedTip}>{t.nft_unapproved_tip()}</Typography>
+                        <Typography className={classes.approveAllTip}>{t.nft_approve_all_tip()}</Typography>
                     </>
                 ) : null}
                 <EthereumWalletConnectedBoundary>
@@ -358,7 +357,7 @@ export function RedPacketERC721Form(props: RedPacketERC721FormProps) {
                             disabled={!!validationMessage}
                             fullWidth
                             onClick={() => setOpenConfirmDialog(true)}>
-                            {t('plugin_red_packet_next')}
+                            {t.next()}
                         </ActionButton>
                     </EthereumERC721TokenApprovedBoundary>
                 </EthereumWalletConnectedBoundary>

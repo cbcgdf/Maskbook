@@ -1,4 +1,10 @@
 {
+    "next": "Next",
+    "nft_approve_all_tip": "Note: When selecting approve all, all NFTs in the contract will be authorized for sale by default, including the NFTs transfered later.",
+    "nft_unapproved_tip": "You can get the rest of your NFTs back after 24 hours of sending.",
+    "nft_select_partially_option": "Select partially",
+    "nft_select_all_option": "ALL ({{total}} NFT)",
+    "erc721_insufficient_balance": "Insufficient Balance",
     "erc721_tab_title": "Collectibles",
     "erc20_tab_title": "Token",
     "claimed": "Claimed",

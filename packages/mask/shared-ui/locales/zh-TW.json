@@ -209,7 +209,6 @@
     "plugin_wallet_not_available_on": "{{network}} 不可用",
     "plugin_wallet_connect_wallet": "連接錢包",
     "plugin_wallet_connect_wallet_tip": "請連接你的錢包",
-    "plugin_red_packet_erc721_insufficient_balance": "餘額不足",
     "plugin_red_packet_split_mode": "分割模式",
     "plugin_red_packet_average": "平均",
     "plugin_red_packet_random": "隨機",
