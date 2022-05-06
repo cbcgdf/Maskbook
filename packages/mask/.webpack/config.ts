@@ -328,7 +328,7 @@ function addHTMLEntry(
     if (options.sourceMap) {
         templateContent = templateContent.replace(
             `<!-- CSP -->`,
-            `<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval'; require-trusted-types-for 'script'; trusted-types default webpack">`,
+            `<meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-eval'; require-trusted-types-for 'script'; trusted-types webpack mask">`,
         )
     }
     if (options.lockdown) {
