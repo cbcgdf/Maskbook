@@ -1,4 +1,6 @@
 {
+    "attached_message": "Attached Message",
+    "indivisible": "The minimum amount for each share is {{amount}} {{symbol}}",
     "name": "Lucky Drop",
     "description": "Gift crypto or NFTs to any users, first come, first served.",
     "next": "Next",
