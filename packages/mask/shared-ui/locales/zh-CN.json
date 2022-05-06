@@ -309,8 +309,6 @@
     "plugin_wallet_connect_wallet_tip": "请连接钱包",
     "plugin_wallet_name_placeholder": "输入1-12 个字符",
     "plugin_wallet_cancel_sign": "签名已取消。",
-    "plugin_red_packet_erc20_tab_title": "代币",
-    "plugin_red_packet_erc721_tab_title": "收藏品",
     "plugin_red_packet_erc721_insufficient_balance": "余额不足",
     "plugin_red_packet_split_mode": "分享模式",
     "plugin_red_packet_average": "平均",
