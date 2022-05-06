@@ -1,0 +1,14 @@
+{
+    "from": "From: @{{name}}",
+    "share_message_official_account": "I just claimed a lucky drop from @{{sender}} on {{network}} network. Follow @{{account}} (mask.io) to claim lucky drops.\n#mask_io #LuckyDrop\n{{payload}}",
+    "share_message_not_twitter": "I just claimed a lucky drop from @{{sender}} on {{network}} network. \n{{payload}}",
+    "share_unclaimed_message_official_account": "Hi friends, I just found a lucky drop sent by @{{sender}} on {{network}} network. Follow @{{account}} (mask.io) to claim lucky drops.\n#mask_io #LuckyDrop\n{{payload}}",
+    "share_unclaimed_message_not_twitter": "Hi friends, I just found a lucky drop sent by @{{sender}} on {{network}} network. \n{{payload}}",
+    "description_claimed": "You got {{amount}} {{symbol}}",
+    "description_refund": "You could refund {{balance}} {{symbol}}.",
+    "description_refunded": "The Lucky Drop has been refunded.",
+    "description_expired": "The Lucky Drop is expired.",
+    "description_broken": "The Lucky Drop is broken.",
+    "description_empty": "The Lucky Drop is empty.",
+    "description_failover": "{{shares}} shares / {{total}} {{symbol}}"
+}
