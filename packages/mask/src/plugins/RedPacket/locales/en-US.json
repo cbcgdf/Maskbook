@@ -1,4 +1,8 @@
 {
+    "details": "Lucky Drop Details",
+    "display_name": "Plugin: Lucky Drop",
+    "select_existing": "Past",
+    "create_new": "New",
     "send_symbol": "Send {{amount}} {{symbol}}",
     "back": "Back",
     "hint": "You can withdraw the remaining balance 24 hours after the Lucky Drop is sent.",
