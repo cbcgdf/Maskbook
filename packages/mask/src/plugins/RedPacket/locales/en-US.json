@@ -1,4 +1,9 @@
 {
+    "history_claimed": "Claimed: <strong>{{claimedShares}}/{{shares}}</strong> Share",
+    "send": "Send",
+    "history_duration": "Time: {{startTime}} ~ {{endTime}} (UTC+8)",
+    "best_wishes": "Best Wishes!",
+    "data_broken": "The Lucky Drop can’t be sent due to data damage.",
     "from": "From: @{{name}}",
     "share_message_official_account": "I just claimed a lucky drop from @{{sender}} on {{network}} network. Follow @{{account}} (mask.io) to claim lucky drops.\n#mask_io #LuckyDrop\n{{payload}}",
     "share_message_not_twitter": "I just claimed a lucky drop from @{{sender}} on {{network}} network. \n{{payload}}",

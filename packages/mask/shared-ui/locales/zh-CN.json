@@ -367,7 +367,6 @@
     "plugin_red_packet_completed": "已完成",
     "plugin_red_packet_expired": "已过期",
     "plugin_red_packet_indivisible": "每个份额的最小金额为 {{amount}} {{symbol}}",
-    "plugin_nft_red_packet_data_broken": "由于数据损坏，红包无法发送。",
     "plugin_gitcoin_readme": "通过使用此服务，您将同时向 <fund>Gitcoin grants development fund</fund> 捐赠您5%捐款。",
     "plugin_gitcoin_readme_fund_link": "https://gitcoin.co/gitcoin-sustainability-fund",
     "plugin_gitcoin_select_a_token": "选择代币",
