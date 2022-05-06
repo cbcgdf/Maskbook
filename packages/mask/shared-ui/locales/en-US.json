@@ -323,7 +323,6 @@
     "plugin_wallet_connect_wallet_tip": "Please connect to a wallet.",
     "plugin_wallet_name_placeholder": "Enter 1-12 characters",
     "plugin_wallet_cancel_sign": "Signature canceled.",
-    "plugin_red_packet_claimed": "Claimed",
     "plugin_red_packet_erc20_tab_title": "Token",
     "plugin_red_packet_erc721_tab_title": "Collectibles",
     "plugin_red_packet_name": "Lucky Drop",
