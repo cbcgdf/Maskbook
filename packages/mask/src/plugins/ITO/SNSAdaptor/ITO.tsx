@@ -345,12 +345,13 @@ export function ITO(props: ITO_Props) {
         if (hash) {
             openShareTxDialog({
                 hash,
+                buttonLabel: t('dismiss'),
                 onShare() {
                     window.location.reload()
                 },
             })
         }
-    }, [claimCallback])
+    }, [claimCallback, t])
 
     // #endregion
 
