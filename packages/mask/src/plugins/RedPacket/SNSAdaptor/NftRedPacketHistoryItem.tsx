@@ -175,7 +175,7 @@ export const NftRedPacketHistoryItem: FC<NftRedPacketHistoryItemProps> = memo(
             }
         }
         const handleShowPopover = (anchor: HTMLElement) => {
-            onShowPopover(anchor, t.data_broken())
+            onShowPopover(anchor, t.nft_data_broken())
         }
 
         return (

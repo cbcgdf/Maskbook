@@ -109,8 +109,6 @@
     "plugin_wallet_on_connect_in_firefox": "接続する",
     "plugin_wallet_return_mobile_wallet_options": "モバイルウォレットのオプションに戻る",
     "plugin_wallet_view_qr_code": "QR コードを表示する",
-    "plugin_red_packet_average": "平均",
-    "plugin_red_packet_random": "ランダム",
     "plugin_red_packet_best_wishes": "幸運を祈ります！",
     "plugin_red_packet_claim": "受け取る",
     "plugin_red_packet_refund": "無効",
