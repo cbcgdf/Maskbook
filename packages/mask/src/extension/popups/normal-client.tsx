@@ -14,13 +14,13 @@ import { setInitialPersonaInformation } from './pages/Personas/hooks/PersonaCont
 
 if (location.hash === '#/personas') {
     async function hydrate() {
-        console.time('[SSR] Prefill data')
+        console.time('[SSR] Fill data')
         await Promise.all([
             status,
             currentPersonaIdentifier.readyPromise,
             Services.Identity.queryOwnedPersonaInformation(false).then(setInitialPersonaInformation),
         ])
-        console.timeEnd('[SSR] Prefill data')
+        console.timeEnd('[SSR] Fill data')
 
         const muiCache = createCache({ key: 'css' })
         const tssCache = createCache({ key: 'tss' })
