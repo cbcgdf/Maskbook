@@ -1,4 +1,9 @@
 {
+    "nft_total_amount": "Total Amount",
+    "nft_attached_message": "Attached Message",
+    "nft_account_name": "Wallet account",
+    "message_label": "Title",
+    "claim": "Claim",
     "data_broken": "The Lucky Drop can’t be sent due to data damage. Please withdraw the assets after {{duration}}.",
     "refund": "Refund",
     "empty": "Empty",

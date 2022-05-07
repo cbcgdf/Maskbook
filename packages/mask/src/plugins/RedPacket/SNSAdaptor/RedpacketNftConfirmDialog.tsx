@@ -20,13 +20,14 @@ import { Button, Grid, Link, Typography, DialogContent, List, ListItem } from '@
 import ActionButton from '../../../extension/options-page/DashboardComponents/ActionButton'
 import { EthereumWalletConnectedBoundary } from '../../../web3/UI/EthereumWalletConnectedBoundary'
 import LaunchIcon from '@mui/icons-material/Launch'
-import { useI18N } from '../../../utils'
+import { useI18N as useBaseI18N } from '../../../utils'
 import { useCreateNftRedpacketCallback } from './hooks/useCreateNftRedpacketCallback'
 import { useCurrentIdentity } from '../../../components/DataSource/useActivatedUI'
 import { useCompositionContext } from '@masknet/plugin-infra/content-script'
 import { RedPacketNftMetaKey } from '../constants'
 import { WalletMessages } from '../../Wallet/messages'
 import { RedPacketRPC } from '../messages'
+import { useI18N } from '../locales'
 
 const useStyles = makeStyles()((theme) => ({
     root: {
@@ -165,7 +166,8 @@ export function RedpacketNftConfirmDialog(props: RedpacketNftConfirmDialogProps)
     const web3 = useWeb3()
     const { attachMetadata } = useCompositionContext()
 
-    const { t } = useI18N()
+    const { t: i18n } = useBaseI18N()
+    const t = useI18N()
     const { address: publicKey, privateKey } = useMemo(() => web3.eth.accounts.create(), [])
     const duration = 60 * 60 * 24
     const currentIdentity = useCurrentIdentity()
@@ -228,12 +230,12 @@ export function RedpacketNftConfirmDialog(props: RedpacketNftConfirmDialogProps)
     }, [createState, onSendPost])
 
     return (
-        <InjectedDialog open={open} onClose={onBack} title={t('confirm')} maxWidth="xs">
+        <InjectedDialog open={open} onClose={onBack} title={i18n('confirm')} maxWidth="xs">
             <DialogContent className={classes.root}>
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <Typography color="textPrimary" variant="body1" className={classes.text}>
-                            {t('plugin_red_packet_nft_account_name')}
+                            {t.nft_account_name()}
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -258,7 +260,7 @@ export function RedpacketNftConfirmDialog(props: RedpacketNftConfirmDialogProps)
                     </Grid>
                     <Grid item xs={6}>
                         <Typography variant="body1" color="textPrimary" className={classNames(classes.text)}>
-                            {t('plugin_red_packet_nft_attached_message')}
+                            {t.nft_attached_message()}
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -272,7 +274,7 @@ export function RedpacketNftConfirmDialog(props: RedpacketNftConfirmDialogProps)
                     </Grid>
                     <Grid item xs={6}>
                         <Typography variant="body1" color="textPrimary" className={classNames(classes.text)}>
-                            {t('plugin_wallet_collections')}
+                            {i18n('plugin_wallet_collections')}
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -299,7 +301,7 @@ export function RedpacketNftConfirmDialog(props: RedpacketNftConfirmDialogProps)
 
                     <Grid item xs={6}>
                         <Typography color="textPrimary" variant="body1" className={classNames(classes.text)}>
-                            {t('plugin_red_packet_nft_total_amount')}
+                            {t.nft_total_amount()}
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
@@ -319,7 +321,7 @@ export function RedpacketNftConfirmDialog(props: RedpacketNftConfirmDialogProps)
                             onClick={onBack}
                             size="large"
                             variant="contained">
-                            {t('cancel')}
+                            {i18n('cancel')}
                         </Button>
                     </Grid>
                     <Grid item xs={6}>
@@ -336,8 +338,8 @@ export function RedpacketNftConfirmDialog(props: RedpacketNftConfirmDialogProps)
                                 onClick={onSendTx}
                                 className={classNames(classes.button, classes.sendButton)}
                                 fullWidth>
-                                {t('plugin_red_packet_send_symbol', {
-                                    amount: tokenList.length,
+                                {t.send_symbol({
+                                    amount: tokenList.length.toString(),
                                     symbol: tokenList.length > 1 ? 'NFTs' : 'NFT',
                                 })}
                             </ActionButton>
