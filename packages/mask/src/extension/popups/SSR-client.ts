@@ -43,7 +43,7 @@ function prefetch() {
     import(/* webpackPrefetch: true */ './pages/Wallet')
 }
 
-// To make prefecher not be tree-shake
+// To make prefetch not be tree-shake
 if (''.toLowerCase() === 'hint') {
     prefetch()
 }

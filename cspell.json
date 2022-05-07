@@ -71,6 +71,7 @@
         "datas",
         "debank",
         "denorm",
+        "deserialization",
         "dfyn",
         "dhedge",
         "dimensiondev",
