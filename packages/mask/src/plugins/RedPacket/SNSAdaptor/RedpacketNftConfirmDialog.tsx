@@ -268,13 +268,13 @@ export function RedpacketNftConfirmDialog(props: RedpacketNftConfirmDialogProps)
                             variant="body1"
                             color="textPrimary"
                             align="right"
-                            className={(classes.text, classes.bold, classes.ellipsis)}>
+                            className={classNames(classes.text, classes.bold, classes.ellipsis)}>
                             {message}
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>
                         <Typography variant="body1" color="textPrimary" className={classNames(classes.text)}>
-                            {i18n('plugin_wallet_collections')}
+                            {t.collections()}
                         </Typography>
                     </Grid>
                     <Grid item xs={6}>

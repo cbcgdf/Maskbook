@@ -38,7 +38,7 @@ export function RedPacket(props: RedPacketProps) {
     const { payload } = props
 
     const t = useI18N()
-    const { t: i18n } = useBaseI18n()
+    const { t: tr } = useBaseI18n()
     const { classes } = useStyles()
 
     // context
@@ -88,7 +88,7 @@ export function RedPacket(props: RedPacketProps) {
             sender: payload.sender.name,
             payload: postLink.toString(),
             network: resolveNetworkName(networkType),
-            account: isTwitter(activatedSocialNetworkUI) ? i18n('twitter_account') : i18n('facebook_account'),
+            account: isTwitter(activatedSocialNetworkUI) ? tr('twitter_account') : tr('facebook_account'),
         }
         if (listOfStatus.includes(RedPacketStatus.claimed) || claimTxHash) {
             return isOnTwitter || isOnFacebook
@@ -97,9 +97,9 @@ export function RedPacket(props: RedPacketProps) {
         }
 
         return isOnTwitter || isOnFacebook
-            ? t.share_message_official_account(shareTextOption)
-            : t.share_message_not_twitter(shareTextOption)
-    }, [payload, postLink, networkType, claimTxHash, listOfStatus, activatedSocialNetworkUI, t, i18n])
+            ? t.share_unclaimed_message_official_account(shareTextOption)
+            : t.share_unclaimed_message_not_twitter(shareTextOption)
+    }, [payload, postLink, networkType, claimTxHash, listOfStatus, activatedSocialNetworkUI, t, tr])
 
     const [{ loading: isRefunding }, isRefunded, refundCallback] = useRefundCallback(
         payload.contract_version,
@@ -173,7 +173,7 @@ export function RedPacket(props: RedPacketProps) {
             <EthereumChainBoundary chainId={getChainIdFromName(payload.network ?? '') ?? ChainId.Mainnet}>
                 <Card className={classes.root} component="article" elevation={0}>
                     <Typography className={classes.loadingText} variant="body2">
-                        {i18n('loading')}
+                        {tr('loading')}
                     </Typography>
                 </Card>
             </EthereumChainBoundary>

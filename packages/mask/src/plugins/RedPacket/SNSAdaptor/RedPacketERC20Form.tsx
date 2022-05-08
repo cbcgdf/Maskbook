@@ -84,7 +84,7 @@ export interface RedPacketFormProps extends withClasses<never> {
 
 export function RedPacketERC20Form(props: RedPacketFormProps) {
     const t = useI18N()
-    const { t: i18n } = useBaseI18n()
+    const { t: tr } = useBaseI18n()
     const classes = useStylesExtends(useStyles(), props)
     const { onChange, onNext, origin } = props
     // context
@@ -152,20 +152,20 @@ export function RedPacketERC20Form(props: RedPacketFormProps) {
     // #endregion
 
     const validationMessage = useMemo(() => {
-        if (!token) return i18n('plugin_wallet_select_a_token')
-        if (!account) return i18n('plugin_wallet_connect_a_wallet')
+        if (!token) return t.select_a_token()
+        if (!account) return tr('plugin_wallet_connect_a_wallet')
         if (isZero(shares || '0')) return 'Enter shares'
         if (isGreaterThan(shares || '0', 255)) return 'At most 255 recipients'
-        if (isZero(amount)) return i18n('plugin_dhedge_enter_an_amount')
+        if (isZero(amount)) return tr('plugin_dhedge_enter_an_amount')
         if (isGreaterThan(totalAmount, tokenBalance))
-            return i18n('plugin_gitcoin_insufficient_balance', { symbol: token.symbol })
+            return tr('plugin_gitcoin_insufficient_balance', { symbol: token.symbol })
         if (!isDivisible)
             return t.indivisible({
                 symbol: token.symbol!,
                 amount: formatBalance(1, token.decimals),
             })
         return ''
-    }, [account, amount, totalAmount, shares, token, tokenBalance])
+    }, [account, amount, totalAmount, shares, token, tokenBalance, t, tr])
 
     const creatingParams = useMemo(
         () => ({

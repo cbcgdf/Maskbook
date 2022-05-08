@@ -1,5 +1,7 @@
 import ts from 'typescript'
 
+const transformIdentifiers = ['tr', 't']
+
 export function getUsedKeys(content: string) {
     const keys = new Set<string>()
     const transformer = (context: ts.TransformationContext) => (rootNode: ts.Node) => {
@@ -33,14 +35,14 @@ export function getUsedKeys(content: string) {
             if (node === undefined) {
                 return false
             } else if (ts.isIdentifier(node)) {
-                return node.text === 't'
+                return transformIdentifiers.includes(node.text)
             } else if (ts.isPropertyAccessExpression(node)) {
-                return node.name.text === 't'
+                return transformIdentifiers.includes(node.name.text)
             }
             return false
         }
         const visit: ts.Visitor = (node) => {
-            if (ts.isIdentifier(node) && node.text === 't') {
+            if (ts.isIdentifier(node) && transformIdentifiers.includes(node.text)) {
                 const expression = ts.findAncestor(node, ts.isCallExpression)
                 if (!checkCallExpression(expression?.expression)) {
                     return node

@@ -25,7 +25,7 @@ export function OperationFooter({
     onClaimOrRefund,
 }: OperationFooterProps) {
     const { classes } = useStyles()
-    const { t: i18n } = useBaseI18n()
+    const { t: tr } = useBaseI18n()
     const t = useI18N()
     const account = useAccount()
     const chainIdValid = useChainIdValid()
@@ -42,14 +42,14 @@ export function OperationFooter({
         if (!account) {
             return (
                 <ActionButton variant="contained" fullWidth size="large" onClick={openSelectProviderDialog}>
-                    {i18n('plugin_wallet_connect_a_wallet')}
+                    {tr('plugin_wallet_connect_a_wallet')}
                 </ActionButton>
             )
         }
         if (!chainIdValid) {
             return (
                 <ActionButton disabled variant="contained" fullWidth size="large">
-                    {i18n('plugin_wallet_invalid_network')}
+                    {tr('plugin_wallet_invalid_network')}
                 </ActionButton>
             )
         }
@@ -76,7 +76,7 @@ export function OperationFooter({
             <Box className={classes.footer}>
                 {canRefund ? null : (
                     <ActionButton variant="contained" fullWidth size="large" onClick={onShare}>
-                        {i18n('share')}
+                        {tr('share')}
                     </ActionButton>
                 )}
                 <ObtainButton />

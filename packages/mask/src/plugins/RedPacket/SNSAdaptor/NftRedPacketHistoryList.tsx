@@ -81,7 +81,7 @@ interface Props {
 
 export function NftRedPacketHistoryList({ onSend }: Props) {
     const { classes } = useStyles()
-    const { t: i18n } = useBaseI18n()
+    const { t: tr } = useBaseI18n()
     const t = useI18N()
     const account = useAccount()
     const chainId = useChainId()
@@ -111,7 +111,7 @@ export function NftRedPacketHistoryList({ onSend }: Props) {
     if (loading) {
         return (
             <Typography className={classes.placeholder} color="textSecondary">
-                {i18n('loading')}
+                {tr('loading')}
             </Typography>
         )
     }
