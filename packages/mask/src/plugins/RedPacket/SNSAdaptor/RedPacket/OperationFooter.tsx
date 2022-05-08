@@ -3,8 +3,9 @@ import { useRemoteControlledDialog } from '@masknet/shared-base-ui'
 import { useAccount, useChainIdValid } from '@masknet/web3-shared-evm'
 import { Box } from '@mui/material'
 import ActionButton from '../../../../extension/options-page/DashboardComponents/ActionButton'
-import { useI18N } from '../../../../utils'
+import { useI18N as useBaseI18n } from '../../../../utils'
 import { EthereumWalletConnectedBoundary } from '../../../../web3/UI/EthereumWalletConnectedBoundary'
+import { useI18N } from '../../locales'
 import { useStyles } from './useStyles'
 
 interface OperationFooterProps {
@@ -24,7 +25,8 @@ export function OperationFooter({
     onClaimOrRefund,
 }: OperationFooterProps) {
     const { classes } = useStyles()
-    const { t } = useI18N()
+    const { t: i18n } = useBaseI18n()
+    const t = useI18N()
     const account = useAccount()
     const chainIdValid = useChainIdValid()
 
@@ -40,14 +42,14 @@ export function OperationFooter({
         if (!account) {
             return (
                 <ActionButton variant="contained" fullWidth size="large" onClick={openSelectProviderDialog}>
-                    {t('plugin_wallet_connect_a_wallet')}
+                    {i18n('plugin_wallet_connect_a_wallet')}
                 </ActionButton>
             )
         }
         if (!chainIdValid) {
             return (
                 <ActionButton disabled variant="contained" fullWidth size="large">
-                    {t('plugin_wallet_invalid_network')}
+                    {i18n('plugin_wallet_invalid_network')}
                 </ActionButton>
             )
         }
@@ -61,13 +63,7 @@ export function OperationFooter({
                 variant="contained"
                 size="large"
                 onClick={onClaimOrRefund}>
-                {canClaim
-                    ? isClaiming
-                        ? t('plugin_red_packet_claiming')
-                        : t('plugin_red_packet_claim')
-                    : isRefunding
-                    ? t('plugin_red_packet_refunding')
-                    : t('plugin_red_packet_refund')}
+                {canClaim ? (isClaiming ? t.claiming() : t.claim()) : isRefunding ? t.refunding() : t.refund()}
             </ActionButton>
         )
     }
@@ -80,7 +76,7 @@ export function OperationFooter({
             <Box className={classes.footer}>
                 {canRefund ? null : (
                     <ActionButton variant="contained" fullWidth size="large" onClick={onShare}>
-                        {t('share')}
+                        {i18n('share')}
                     </ActionButton>
                 )}
                 <ObtainButton />
