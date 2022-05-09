@@ -106,7 +106,7 @@ export function RedPacket(props: RedPacketProps) {
         } else if (canRefund) {
             hash = await refundCallback()
         }
-        if (!hash) return
+        if (typeof hash !== 'string') return
         openShareTxDialog({
             hash,
             onShare() {
