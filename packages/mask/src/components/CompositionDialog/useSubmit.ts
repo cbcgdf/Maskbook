@@ -4,14 +4,17 @@ import { RedPacketMetadataReader } from '../../plugins/RedPacket/SNSAdaptor/help
 import { ImageTemplateTypes, socialNetworkEncoder } from '@masknet/encryption'
 import { activatedSocialNetworkUI, globalUIState } from '../../social-network'
 import { isTwitter } from '../../social-network-adaptor/twitter.com/base'
-import { useI18N } from '../../utils'
+import { I18NFunction, useI18N } from '../../utils'
 import { SteganographyTextPayload } from '../InjectedComponents/SteganographyTextPayload'
 import type { SubmitComposition } from './CompositionUI'
 import { useLastRecognizedIdentity } from '../DataSource/useActivatedUI'
 import { isFacebook } from '../../social-network-adaptor/facebook.com/base'
+import { ITO_MetadataReader } from '../../plugins/ITO/SNSAdaptor/helpers'
+import { FileInfoMetadataReader } from '@masknet/plugin-file-service'
+import type { Meta } from '@masknet/typed-message'
 
 export function useSubmit(onClose: () => void, reason: 'timeline' | 'popup' | 'reply') {
-    const { t } = useI18N()
+    const { t: t } = useI18N()
     const whoAmI = useLastRecognizedIdentity()
 
     return useCallback(
@@ -21,32 +24,19 @@ export function useSubmit(onClose: () => void, reason: 'timeline' | 'popup' | 'r
 
             const _encrypted = await Services.Crypto.encryptTo(content, target, whoAmI?.identifier ?? currentProfile)
             const encrypted = socialNetworkEncoder(activatedSocialNetworkUI.encryptionNetwork, _encrypted)
+            const decoratedText = decorateEncryptedText(encrypted, t, content.meta)
 
-            const redPacketPreText =
-                isTwitter(activatedSocialNetworkUI) || isFacebook(activatedSocialNetworkUI)
-                    ? t('additional_post_box__encrypted_post_pre_red_packet_twitter_official_account', {
-                          encrypted,
-                          account: isTwitter(activatedSocialNetworkUI) ? t('twitter_account') : t('facebook_account'),
-                      })
-                    : t('additional_post_box__encrypted_post_pre_red_packet', { encrypted })
-
-            // TODO: move into the plugin system
-            const redPacketMetadata = RedPacketMetadataReader(content.meta)
             if (encode === 'image') {
                 const defaultText = t('additional_post_box__steganography_post_pre', {
                     random: new Date().toLocaleString(),
                 })
-                if (redPacketMetadata.ok) {
-                    await pasteImage(redPacketPreText.replace(encrypted, '') ?? defaultText, encrypted, 'eth', reason)
+                if (decoratedText !== null) {
+                    await pasteImage(decoratedText.replace(encrypted, ''), encrypted, 'eth', reason)
                 } else {
                     await pasteImage(defaultText, encrypted, 'v2', reason)
                 }
             } else {
-                pasteTextEncode(
-                    (redPacketMetadata.ok ? redPacketPreText : null) ??
-                        t('additional_post_box__encrypted_post_pre', { encrypted }),
-                    reason,
-                )
+                pasteTextEncode(decoratedText ?? t('additional_post_box__encrypted_post_pre', { encrypted }), reason)
             }
             onClose()
         },
@@ -73,4 +63,35 @@ async function pasteImage(
         relatedTextPayload,
         reason,
     })
+}
+
+// TODO: Provide API to plugin to postprocess post content,
+// then we can move these -PreText's and meta readrs into plugin's own context
+function decorateEncryptedText(encrypted: string, t: I18NFunction, meta?: Meta) {
+    const hasOfficalAccount = isTwitter(activatedSocialNetworkUI) || isFacebook(activatedSocialNetworkUI)
+    const officalAccount = isTwitter(activatedSocialNetworkUI) ? t('twitter_account') : t('facebook_account')
+
+    if (RedPacketMetadataReader(meta).ok) {
+        return hasOfficalAccount
+            ? t('additional_post_box__encrypted_post_pre_red_packet_twitter_official_account', {
+                  encrypted,
+                  account: officalAccount,
+              })
+            : t('additional_post_box__encrypted_post_pre_red_packet', { encrypted })
+    } else if (ITO_MetadataReader(meta).ok) {
+        return hasOfficalAccount
+            ? t('additional_post_box__encrypted_post_pre_ito_twitter_official_account', {
+                  encrypted,
+                  account: officalAccount,
+              })
+            : t('additional_post_box__encrypted_post_pre_ito', { encrypted })
+    } else if (FileInfoMetadataReader(meta).ok) {
+        return hasOfficalAccount
+            ? t('additional_post_box__encrypted_post_pre_file_service_twitter_official_account', {
+                  encrypted,
+                  account: officalAccount,
+              })
+            : t('additional_post_box__encrypted_post_pre_file_service', { encrypted })
+    }
+    return ''
 }
