@@ -3,7 +3,8 @@ import { Box, Card, Typography, Button, Grid, Avatar } from '@mui/material'
 import { makeStyles } from '@masknet/theme'
 import QueryBuilderIcon from '@mui/icons-material/QueryBuilder'
 import VerifiedUserIcon from '@mui/icons-material/VerifiedUser'
-import { useI18N } from '../../../utils'
+import { useI18N as useBaseI18N } from '../../../utils'
+import { useI18N } from '../locales'
 import { useRemoteControlledDialog } from '@masknet/shared-base-ui'
 import { useGrant } from '../hooks/useGrant'
 import { PluginGitcoinMessages } from '../messages'
@@ -75,7 +76,8 @@ interface PreviewCardProps {
 }
 
 export function PreviewCard(props: PreviewCardProps) {
-    const { t } = useI18N()
+    const { t: tr } = useBaseI18N()
+    const t = useI18N()
     const { classes } = useStyles()
     const { value: grant, error, loading, retry } = useGrant(props.id)
 
@@ -93,13 +95,13 @@ export function PreviewCard(props: PreviewCardProps) {
     }, [grant, setDonationDialog])
     // #endregion
 
-    if (loading) return <Typography color="textPrimary">{t('loading')}</Typography>
+    if (loading) return <Typography color="textPrimary">{tr('loading')}</Typography>
     if (error)
         return (
             <Box display="flex" flexDirection="column" alignItems="center">
-                <Typography color="textPrimary">{t('go_wrong')}</Typography>
+                <Typography color="textPrimary">{tr('go_wrong')}</Typography>
                 <Button sx={{ marginTop: 1 }} size="small" onClick={retry}>
-                    {t('retry')}
+                    {tr('retry')}
                 </Button>
             </Box>
         )
@@ -125,12 +127,12 @@ export function PreviewCard(props: PreviewCardProps) {
                 <div className={classes.meta}>
                     <QueryBuilderIcon fontSize="small" color="disabled" />
                     <Typography variant="body2" color="textSecondary">
-                        {t('plugin_gitcoin_last_updated')} {grant.last_update_natural}
+                        {t.last_updated()} {grant.last_update_natural}
                     </Typography>
                 </div>
                 <div className={classes.meta}>
                     <Typography variant="body2" color="textSecondary">
-                        {t('plugin_gitcoin_by')}
+                        {t.by()}
                     </Typography>
                     <Avatar
                         alt={grant.admin_profile.handle}
@@ -151,12 +153,12 @@ export function PreviewCard(props: PreviewCardProps) {
                         target="_blank"
                         rel="noopener noreferrer"
                         href={urlcat('https://gitcoin.co', grant.url)}>
-                        {t('plugin_gitcoin_view_on')}
+                        {t.view_on()}
                     </Button>
                 </Grid>
                 <Grid item xs={6}>
                     <Button variant="contained" fullWidth color="primary" onClick={onDonate}>
-                        {t('plugin_gitcoin_donate')}
+                        {t.donate()}
                     </Button>
                 </Grid>
             </Grid>
