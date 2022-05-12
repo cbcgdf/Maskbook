@@ -13,6 +13,7 @@ import { usePower } from './hooks/usePower'
 import { EthereumWalletConnectedBoundary } from '../../../web3/UI/EthereumWalletConnectedBoundary'
 import { VoteConfirmDialog } from './VoteConfirmDialog'
 import { useRetry } from './hooks/useRetry'
+import { activatedSocialNetworkUI } from '../../../social-network'
 
 const useStyles = makeStyles()((theme) => {
     return {
@@ -48,11 +49,12 @@ export function VotingCard() {
     const [loading, setLoading] = useState(false)
     const retry = useRetry()
     const onVoteConfirm = useSnackbarCallback(
-        () => {
+        async () => {
             setLoading(true)
-            return PluginSnapshotRPC.vote(identifier, choice, account, proposal.type)
+            await PluginSnapshotRPC.vote(identifier, choice, account, proposal.type)
+            activatedSocialNetworkUI.utils.share?.(t('promote_snapshot'))
         },
-        [choice, identifier],
+        [choice, identifier, account, proposal.type, t],
         () => {
             setLoading(false)
             setOpen(false)

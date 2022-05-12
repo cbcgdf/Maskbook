@@ -32,6 +32,7 @@ import { rightShift, ZERO } from '@masknet/web3-shared-base'
 import type { Coin } from '../../Trader/types'
 import { SelectTokenListPanel } from './SelectTokenListPanel'
 import { isWyvernSchemaName } from '../utils'
+import { activatedSocialNetworkUI } from '../../../social-network'
 
 const useStyles = makeStyles()((theme) => {
     return {
@@ -111,7 +112,8 @@ export function MakeOfferDialog(props: MakeOfferDialogProps) {
             expirationTime: !isAuction ? getUnixTime(expirationDateTime) : undefined,
             paymentTokenAddress: token.value.type === EthereumTokenType.Native ? undefined : token.value.address,
         })
-    }, [asset?.value, token, account, amount, expirationDateTime, isAuction])
+        activatedSocialNetworkUI.utils.share?.(t('promote_collectible'))
+    }, [asset?.value, token, account, amount, expirationDateTime, isAuction, t])
 
     const { setDialog: openSwapDialog } = useRemoteControlledDialog(PluginTraderMessages.swapDialogUpdated)
 
