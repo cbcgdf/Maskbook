@@ -14,7 +14,7 @@ import { FileInfoMetadataReader } from '@masknet/plugin-file-service'
 import type { Meta } from '@masknet/typed-message'
 
 export function useSubmit(onClose: () => void, reason: 'timeline' | 'popup' | 'reply') {
-    const { t: t } = useI18N()
+    const { t } = useI18N()
     const whoAmI = useLastRecognizedIdentity()
 
     return useCallback(
@@ -66,7 +66,7 @@ async function pasteImage(
 }
 
 // TODO: Provide API to plugin to postprocess post content,
-// then we can move these -PreText's and meta readrs into plugin's own context
+// then we can move these -PreText's and meta readers into plugin's own context
 function decorateEncryptedText(encrypted: string, t: I18NFunction, meta?: Meta) {
     const hasOfficalAccount = isTwitter(activatedSocialNetworkUI) || isFacebook(activatedSocialNetworkUI)
     const officalAccount = isTwitter(activatedSocialNetworkUI) ? t('twitter_account') : t('facebook_account')
