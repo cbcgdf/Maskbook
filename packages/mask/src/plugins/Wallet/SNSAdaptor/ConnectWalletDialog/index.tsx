@@ -155,7 +155,7 @@ export function ConnectWalletDialog() {
     if (!providerType || !networkPluginId || !networkType) return null
 
     return (
-        <InjectedDialog title={t('plugin_wallet_connecting_title')} open={open} onClose={closeDialog}>
+        <InjectedDialog title={t('plugin_wallet_dialog_title')} open={open} onClose={closeDialog}>
             <DialogContent className={classes.content}>
                 <ConnectionProgress
                     networkPluginId={networkPluginId}
