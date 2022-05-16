@@ -1,6 +1,6 @@
 import { defer, DeferTuple } from '@dimensiondev/kit'
 import { EMPTY_LIST } from '@masknet/shared-base'
-import { createContext, createElement, FC, FunctionComponent, PropsWithChildren, useMemo, useState } from 'react'
+import { ComponentType, createContext, createElement, FC, PropsWithChildren, useMemo, useState } from 'react'
 import type { InjectedDialogProps } from './components'
 
 type ExtendPromise<T> = Promise<T> & {
@@ -25,7 +25,7 @@ export const createUITaskManager = <
     Props extends BaseDialogProps,
     ResolveProp extends CallableKeys<Props> & CallableKeys<TaskOptions>,
 >(
-    Component: FunctionComponent<Props>,
+    Component: ComponentType<Props>,
     taskResolveField: ResolveProp,
 ) => {
     type ContextOptions = ContextOptionsGeneric<TaskOptions, Result | null>
