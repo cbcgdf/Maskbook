@@ -31,9 +31,33 @@ export async function findAllUsedKeys() {
     for await (const file of walk(EXTENSION_SOURCE, /\.(tsx?)$/)) {
         usedKeys.push(...getUsedKeys(await fs.readFile(file, 'utf-8')))
     }
+    const en: Record<string, string> = await readMessages('en-US')
+    const allKeys = keys(en)
+    // Plural and context keys
+    allKeys.forEach((key) => {
+        const [, base] = key.match(/(.*?)\$\w+$/) ?? []
+        if (base && usedKeys.includes(base)) {
+            usedKeys.push(key)
+        }
+    })
+    // Nested keys
+    allKeys.forEach((key) => {
+        if (!usedKeys.includes(key)) return
+        const nestedExpList = en[key].match(/\$t\(.*?\)/g)
+        if (!nestedExpList) return
+        nestedExpList.forEach((nestedExp) => {
+            const [, nestedKey] = nestedExp.match(/\$t\((.*?)\)/) ?? []
+            if (nestedKey) {
+                usedKeys.push(nestedKey)
+            }
+        })
+    })
     return uniq(usedKeys)
 }
 
 export async function findAllUnusedKeys() {
-    return difference(keys(await readMessages('en-US')), await findAllUsedKeys())
+    const en: Record<string, string> = await readMessages('en-US')
+    const allKeys = keys(en)
+    const usedKeys = await findAllUsedKeys()
+    return difference(allKeys, usedKeys)
 }

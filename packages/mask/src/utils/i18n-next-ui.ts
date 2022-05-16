@@ -3,11 +3,15 @@ import type en from '../../shared-ui/locales/en-US.json'
 import type { i18NextInstance, TranslateOptions } from '@masknet/shared-base'
 import { SupportedLanguages } from '@masknet/public-api'
 
-export type I18NFunction = <TKeys extends keyof typeof en>(
+type LocaleKeys = keyof typeof en
+type ExtendBaseKeys<K extends LocaleKeys> = K extends `${infer B}$${string}` ? B | K : K
+type AvailableLocaleKeys = ExtendBaseKeys<LocaleKeys>
+
+export type I18NFunction = <TKeys extends AvailableLocaleKeys>(
     key: TKeys | TKeys[],
     // defaultValue?: string,
     options?: TranslateOptions | string,
-) => typeof en[TKeys]
+) => string
 
 /**
  * Enhanced version of useTranslation
